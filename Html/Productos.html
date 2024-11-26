@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Lateral</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Banner lateral -->
+    <div class="sidebar">
+      <button class="tab-button active" onclick="showContent('productos')">Productos</button>
+      <button class="tab-button" onclick="showContent('servicios')">Servicios</button>
+      <button class="tab-button" onclick="showContent('citas')">Citas</button>
+    </div>
+    <!-- Contenido dinámico -->
+    <div class="content">
+      <div id="productos" class="content-panel">Aquí se muestran los productos.</div>
+      <div id="servicios" class="content-panel hidden">Aquí se muestran los servicios.</div>
+      <div id="citas" class="content-panel hidden">Aquí se muestran las citas.</div>
+    </div>
+  </div>
+  <script src="Css/producto.js"></script>
+</body>
+</html>

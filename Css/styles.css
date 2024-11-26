@@ -1,0 +1,145 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #232f3e;
+    color: white;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+}
+
+.search-bar {
+    display: flex;
+    gap: 5px;
+}
+
+.search-bar input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    background-color: #ffa41b;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.banner {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f3f3f3;
+}
+
+.products {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    width: 200px;
+}
+
+.product-card img {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.product-card button {
+    background-color: #232f3e;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.footer {
+    background-color: #232f3e;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+
+/* Estilo para el contenedor derecho del encabezado */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Botón de inicio de sesión */
+.login-btn {
+    background-color: #ffa41b;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #e69317;
+}
+
+/* Estilo del footer */
+.footer {
+    background-color: #232f3e;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Empuja el footer hacia abajo si el contenido es corto */
+}
+
+/* Asegurarse de que la página ocupe al menos toda la altura de la ventana */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altura mínima igual al viewport */
+    margin: 0;
+}
+
+main {
+    flex: 1; /* Permite que el contenido principal crezca y empuje el footer hacia abajo */
+}
