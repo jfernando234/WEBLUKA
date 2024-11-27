@@ -3,71 +3,62 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartItems = document.getElementById("cart-items");
   const cartTotal = document.getElementById("cart-total");
 
-  let products = JSON.parse(localStorage.getItem('products')) || [];
-  let cart = [];
+  let cart = []; // Inicializa el carrito vacío
 
-  function displayProducts(items) {
-    catalog.innerHTML = "";
-    items.forEach(product => {
+  // Cargar productos desde localStorage al iniciar la página
+  loadProducts();
+
+  // Función para cargar productos desde localStorage
+  function loadProducts() {
+    const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
+    catalog.innerHTML = ""; // Limpiar el contenido previo
+
+    if (savedProducts.length === 0) {
+      catalog.innerHTML = "<p>No hay productos disponibles.</p>";
+      return;
+    }
+
+    // Renderizar productos en el catálogo
+    savedProducts.forEach((product) => {
       const productCard = document.createElement("div");
-      productCard.classList.add("product");
+      productCard.classList.add("product-card");
+
       productCard.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        <p><strong>$${product.price}</strong></p>
-        <p>Stock: ${product.stock}</p>
-        <button class="add-to-cart" data-id="${product.id}">Añadir al Carrito</button>
+        <p>Precio: $${product.price.toFixed(2)}</p>
+        <button data-id="${product.id}">Agregar al carrito</button>
       `;
+
+      // Agregar evento para el botón "Agregar al carrito"
+      productCard.querySelector("button").addEventListener("click", () => addToCart(product));
+
       catalog.appendChild(productCard);
     });
-
-    document.querySelectorAll(".add-to-cart").forEach(button => {
-      button.addEventListener("click", addToCart);
-    });
   }
 
-  function addToCart(e) {
-    const productId = e.target.getAttribute("data-id");
-    const product = products.find(p => p.id === productId);
+  // Función para agregar un producto al carrito
+  function addToCart(product) {
+    const existingProduct = cart.find((item) => item.id === product.id);
 
-    if (product && product.stock > 0) {
-      cart.push(product);
-      product.stock -= 1;
-      updateCart();
-      displayProducts(products);
+    if (existingProduct) {
+      existingProduct.quantity += 1;
     } else {
-      alert("Producto sin stock disponible.");
+      cart.push({ ...product, quantity: 1 });
     }
+
+    updateCart();
   }
 
+  // Función para actualizar el carrito
   function updateCart() {
-    cartItems.innerHTML = "";
-    const total = cart.reduce((sum, product) => sum + product.price, 0);
-    cartTotal.textContent = total.toFixed(2);
+    cartItems.innerHTML = ""; // Limpia la lista actual
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    cartTotal.textContent = total.toFixed(2); // Actualiza el total
 
-    cart.forEach(item => {
+    cart.forEach((item) => {
       const li = document.createElement("li");
-      li.textContent = `${item.name} - $${item.price}`;
+      li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
       cartItems.appendChild(li);
     });
   }
-
-  document.getElementById("filter-button").addEventListener("click", () => {
-    const category = document.getElementById("filter-category").value;
-    const minPrice = parseFloat(document.getElementById("filter-min-price").value) || 0;
-    const maxPrice = parseFloat(document.getElementById("filter-max-price").value) || Infinity;
-
-    const filteredProducts = products.filter(p => {
-      return (!category || p.category === category) &&
-             p.price >= minPrice &&
-             p.price <= maxPrice;
-    });
-
-    displayProducts(filteredProducts);
-  });
-
-  // Inicializa la visualización
-  displayProducts(products);
-  populateCategories(products);
 });

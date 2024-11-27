@@ -70,3 +70,18 @@ body {
     cursor: pointer;
     border-radius: 5px;
   }
+
+  .auth-buttons {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+
+  .auth-buttons button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+
