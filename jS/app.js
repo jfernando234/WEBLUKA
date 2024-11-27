@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       productCard.classList.add("product-card");
 
       productCard.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>Precio: $${product.price.toFixed(2)}</p>
         <button data-id="${product.id}">Agregar al carrito</button>
