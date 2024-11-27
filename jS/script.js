@@ -19,3 +19,6 @@ window.addEventListener('click', (event) => {
         loginModal.style.display = 'none';
     }
 });
+
+/*   PORDUCTOS*/
+

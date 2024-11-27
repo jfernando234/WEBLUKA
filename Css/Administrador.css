@@ -53,3 +53,65 @@ body {
     display: none;
   }
   
+  /*PRODUCTOS  */
+form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, textarea, select, button {
+  padding: 10px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+img {
+  max-width: 100px;
+  height: auto;
+}
+
+/*repuestos*/
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#cartSummary {
+  margin-top: 20px;
+}
+
+#cartSummary p {
+  font-weight: bold;
+}
+
+button {
+  background-color: #003366;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0055a5;
+}

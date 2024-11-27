@@ -3,66 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Lateral</title>
-  <link rel="stylesheet" href="/Css/Administrador.css">
+  <title>Comprar Repuestos</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
     <!-- Banner lateral -->
     <div class="sidebar">
-      <button class="tab-button active" onclick="showContent('productos')">Productos</button>
-      <button class="tab-button" onclick="showContent('repuestos')">Repuestos</button>
+      <button class="tab-button" onclick="showContent('productos')">Productos</button>
+      <button class="tab-button" onclick="showContent('servicios')">Servicios</button>
       <button class="tab-button" onclick="showContent('citas')">Citas</button>
+      <button class="tab-button active" onclick="showContent('repuestos')">Comprar Repuestos</button>
     </div>
-     <!-- Contenido dinámico -->
-    <div class="content">
-      <!-- Sección de Productos -->
-      <div id="productos" class="content-panel">
-        <h2>Registrar Producto</h2>
-        <form id="productForm">
-          <label for="productName">Nombre del Producto:</label>
-          <input type="text" id="productName" required>
-          
-          <label for="productDescription">Descripción:</label>
-          <textarea id="productDescription" required></textarea>
-          
-          <label for="productPrice">Precio:</label>
-          <input type="number" id="productPrice" min="0.01" step="0.01" required>
-          
-          <label for="productStock">Cantidad en Stock:</label>
-          <input type="number" id="productStock" min="1" step="1" required>
-          
-          <label for="productCategory">Categoría:</label>
-          <select id="productCategory" required>
-            <option value="">Seleccionar</option>
-            <option value="Filtros">Filtros</option>
-            <option value="Aceites">Aceites</option>
-            <option value="Bujías">Bujías</option>
-          </select>
-          
-          <label for="productImage">Imagen:</label>
-          <input type="file" id="productImage" accept="image/*" required>
-          
-          <button type="submit">Registrar Producto</button>
-        </form>
-        
-        <h2>Lista de Productos</h2>
-        <table id="productTable">
-          <thead>
-            <tr>
-              <th>Imagen</th>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Categoría</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Los productos se agregarán aquí dinámicamente -->
-          </tbody>
-        </table>
-      </div>
     <!-- Contenido dinámico -->
     <div class="content">
       <!-- Comprar Repuestos -->
@@ -129,12 +81,12 @@
         </div>
       </div>
 
-    <div class="content">
-      <div id="productos" class="content-panel">Aquí se muestran los productos.</div>
-      <div id="servicios" class="content-panel hidden">Aquí se muestran los repuestos.</div>
+      <!-- Otras secciones -->
+      <div id="productos" class="content-panel hidden">Aquí se registran productos.</div>
+      <div id="servicios" class="content-panel hidden">Aquí se muestran los servicios.</div>
       <div id="citas" class="content-panel hidden">Aquí se muestran las citas.</div>
     </div>
   </div>
-  <script src="/jS/administrador.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
