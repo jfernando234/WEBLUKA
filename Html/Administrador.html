@@ -11,7 +11,6 @@
     <!-- Banner lateral -->
     <div class="sidebar">
       <button class="tab-button active" onclick="showContent('productos')">Productos</button>
-      <button class="tab-button" onclick="showContent('repuestos')">Repuestos</button>
       <button class="tab-button" onclick="showContent('citas')">Citas</button>
     </div>
      <!-- Contenido dinámico -->
@@ -65,73 +64,56 @@
       </div>
     <!-- Contenido dinámico -->
     <div class="content">
-      <!-- Comprar Repuestos -->
-      <div id="repuestos" class="content-panel">
-        <h2>Catálogo de Repuestos</h2>
+      <!-- Agendar Citas -->
+      <div id="citas" class="content-panel">
+        <h2>Agendar Citas</h2>
+        <!-- Formulario -->
+        <form id="appointmentForm">
+          <label for="appointmentDate">Fecha:</label>
+          <input type="date" id="appointmentDate" required>
 
-        <!-- Filtros -->
-        <div class="filters">
-          <label for="filterCategory">Categoría:</label>
-          <select id="filterCategory">
-            <option value="">Todas</option>
-            <option value="Filtros">Filtros</option>
-            <option value="Aceites">Aceites</option>
-            <option value="Bujías">Bujías</option>
+          <label for="appointmentTime">Hora:</label>
+          <input type="time" id="appointmentTime" required>
+
+          <label for="serviceType">Tipo de Servicio:</label>
+          <select id="serviceType" required>
+            <option value="Mantenimiento">Mantenimiento</option>
+            <option value="Reparación">Reparación</option>
           </select>
 
-          <label for="filterPriceMin">Precio mínimo:</label>
-          <input type="number" id="filterPriceMin" min="0" placeholder="0">
+          <label for="vehicleBrand">Marca del Vehículo:</label>
+          <input type="text" id="vehicleBrand" placeholder="Ej: Toyota" required>
 
-          <label for="filterPriceMax">Precio máximo:</label>
-          <input type="number" id="filterPriceMax" min="0" placeholder="0">
+          <label for="vehicleModel">Modelo:</label>
+          <input type="text" id="vehicleModel" placeholder="Ej: Corolla" required>
 
-          <label>
-            <input type="checkbox" id="filterInStock"> Solo disponibles
-          </label>
+          <label for="vehicleYear">Año:</label>
+          <input type="number" id="vehicleYear" min="1900" max="2099" placeholder="Ej: 2020" required>
 
-          <button onclick="applyFilters()">Aplicar Filtros</button>
-        </div>
+          <button type="button" onclick="scheduleAppointment()">Agendar Cita</button>
+        </form>
 
-        <!-- Catálogo -->
-        <table id="catalogTable">
+        <!-- Lista de citas -->
+        <h2>Citas Programadas</h2>
+        <table id="appointmentsTable">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Precio</th>
-              <th>Categoría</th>
-              <th>Stock</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Servicio</th>
+              <th>Vehículo</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <!-- Productos cargados dinámicamente -->
+            <!-- Citas cargadas dinámicamente -->
           </tbody>
         </table>
-
-        <h2>Carrito de Compras</h2>
-        <table id="cartTable">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Cantidad</th>
-              <th>Precio Total</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Carrito cargado dinámicamente -->
-          </tbody>
-        </table>
-        <div id="cartSummary">
-          <p>Total: $<span id="totalPrice">0.00</span></p>
-          <button onclick="completePurchase()">Completar Compra</button>
-        </div>
       </div>
-
+    </div>
+  </div>
     <div class="content">
       <div id="productos" class="content-panel">Aquí se muestran los productos.</div>
-      <div id="servicios" class="content-panel hidden">Aquí se muestran los repuestos.</div>
       <div id="citas" class="content-panel hidden">Aquí se muestran las citas.</div>
     </div>
   </div>

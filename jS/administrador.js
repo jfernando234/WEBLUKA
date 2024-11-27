@@ -66,123 +66,71 @@ function showContent(section) {
     this.reset();
   });
 
-  /* repuestos */
-  let products = [
-    { name: "Filtro A", description: "Filtro de aire", price: 20, category: "Filtros", stock: 10 },
-    { name: "Aceite B", description: "Aceite sintético", price: 50, category: "Aceites", stock: 5 },
-    { name: "Bujía C", description: "Bujía estándar", price: 15, category: "Bujías", stock: 0 },
-  ];
-  
-  let cart = [];
-  
-  function showContent(section) {
-    const panels = document.querySelectorAll('.content-panel');
-    panels.forEach(panel => panel.classList.add('hidden'));
-  
-    const selectedPanel = document.getElementById(section);
-    selectedPanel.classList.remove('hidden');
-  
-    const buttons = document.querySelectorAll('.tab-button');
-    buttons.forEach(button => button.classList.remove('active'));
-  
-    const activeButton = document.querySelector(`.tab-button[onclick="showContent('${section}')"]`);
-    activeButton.classList.add('active');
-  }
-  
-  function loadCatalog() {
-    const table = document.getElementById('catalogTable').querySelector('tbody');
-    table.innerHTML = "";
-  
-    products.forEach((product, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${product.name}</td>
-        <td>${product.description}</td>
-        <td>$${product.price.toFixed(2)}</td>
-        <td>${product.category}</td>
-        <td>${product.stock > 0 ? product.stock : "Agotado"}</td>
-        <td>
-          <button ${product.stock === 0 ? "disabled" : ""} onclick="addToCart(${index})">Añadir al carrito</button>
-        </td>
-      `;
-      table.appendChild(row);
-    });
-  }
-  
-  function applyFilters() {
-    const category = document.getElementById('filterCategory').value;
-    const minPrice = parseFloat(document.getElementById('filterPriceMin').value) || 0;
-    const maxPrice = parseFloat(document.getElementById('filterPriceMax').value) || Infinity;
-    const inStock = document.getElementById('filterInStock').checked;
-  
-    const filteredProducts = products.filter(product => {
-      return (
-        (!category || product.category === category) &&
-        product.price >= minPrice &&
-        product.price <= maxPrice &&
-        (!inStock || product.stock > 0)
-      );
-    });
-  
-    // Actualizar tabla con productos filtrados
-    products = filteredProducts;
-    loadCatalog();
-  }
-  
-  function addToCart(index) {
-    const product = products[index];
-    const existing = cart.find(item => item.name === product.name);
-  
-    if (existing) {
-      if (existing.quantity < product.stock) {
-        existing.quantity++;
-      }
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
-  
-    updateCart();
-  }
-  
-  function updateCart() {
-    const table = document.getElementById('cartTable').querySelector('tbody');
-    table.innerHTML = "";
-  
-    let total = 0;
-  
-    cart.forEach((item, index) => {
-      const row = document.createElement('tr');
-      const totalItemPrice = item.quantity * item.price;
-      total += totalItemPrice;
-  
-      row.innerHTML = `
-        <td>${item.name}</td>
-        <td>${item.quantity}</td>
-        <td>$${totalItemPrice.toFixed(2)}</td>
-        <td><button onclick="removeFromCart(${index})">Eliminar</button></td>
-      `;
-      table.appendChild(row);
-    });
-  
-    document.getElementById('totalPrice').textContent = total.toFixed(2);
-  }
-  
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-  }
-  
-  function completePurchase() {
-    if (cart.length === 0) {
-      alert("El carrito está vacío.");
-      return;
-    }
-  
-    alert("Compra completada con éxito. ¡Gracias por tu compra!");
-    cart = [];
-    updateCart();
-  }
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    loadCatalog();
+
+// Cargar citas desde localStorage
+function loadAppointments() {
+  const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+  const tableBody = document.getElementById('appointmentsTable').querySelector('tbody');
+  tableBody.innerHTML = "";
+
+  appointments.forEach((appointment, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${appointment.date}</td>
+      <td>${appointment.time}</td>
+      <td>${appointment.service}</td>
+      <td>${appointment.vehicleBrand} ${appointment.vehicleModel} (${appointment.vehicleYear})</td>
+      <td><button onclick="cancelAppointment(${index})">Cancelar</button></td>
+    `;
+    tableBody.appendChild(row);
   });
+}
+
+// Agendar una cita
+function scheduleAppointment() {
+  const date = document.getElementById('appointmentDate').value;
+  const time = document.getElementById('appointmentTime').value;
+  const service = document.getElementById('serviceType').value;
+  const vehicleBrand = document.getElementById('vehicleBrand').value;
+  const vehicleModel = document.getElementById('vehicleModel').value;
+  const vehicleYear = document.getElementById('vehicleYear').value;
+
+  if (!date || !time || !service || !vehicleBrand || !vehicleModel || !vehicleYear) {
+    alert("Por favor, completa todos los campos.");
+    return;
+  }
+
+  const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+
+  // Validar disponibilidad
+  const isConflict = appointments.some(
+    appointment => appointment.date === date && appointment.time === time
+  );
+
+  if (isConflict) {
+    alert("Este horario ya está ocupado. Por favor, elige otro.");
+    return;
+  }
+
+  // Agregar nueva cita
+  appointments.push({ date, time, service, vehicleBrand, vehicleModel, vehicleYear });
+  localStorage.setItem('appointments', JSON.stringify(appointments));
+
+  alert("Cita agendada con éxito.");
+  loadAppointments();
+}
+
+// Cancelar una cita
+function cancelAppointment(index) {
+  const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+  appointments.splice(index, 1);
+  localStorage.setItem('appointments', JSON.stringify(appointments));
+
+  alert("Cita cancelada con éxito.");
+  loadAppointments();
+}
+
+// Inicializar citas
+document.addEventListener('DOMContentLoaded', () => {
+  loadAppointments();
+});
