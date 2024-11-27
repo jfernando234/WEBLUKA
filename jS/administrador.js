@@ -33,7 +33,6 @@ function showContent(section) {
   document.getElementById('productForm').addEventListener('submit', function (e) {
     e.preventDefault();
   
-    // Obtener valores del formulario
     const name = document.getElementById('productName').value;
     const description = document.getElementById('productDescription').value;
     const price = parseFloat(document.getElementById('productPrice').value);
@@ -46,8 +45,23 @@ function showContent(section) {
       return;
     }
   
-    // Crear una URL de imagen temporal para mostrarla
     const imageUrl = URL.createObjectURL(imageFile);
+  
+    // Crear un objeto producto
+    const product = {
+      id: Date.now().toString(),
+      name,
+      description,
+      price,
+      stock,
+      category,
+      image: imageUrl,
+    };
+  
+    // Guardar en localStorage
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    products.push(product);
+    localStorage.setItem('products', JSON.stringify(products));
   
     // Crear una nueva fila en la tabla
     const table = document.getElementById('productTable').querySelector('tbody');
@@ -62,10 +76,9 @@ function showContent(section) {
       <td>${category}</td>
     `;
   
-    // Limpiar el formulario
     this.reset();
+    alert('Producto registrado y almacenado correctamente.');
   });
-
 
 // Cargar citas desde localStorage
 function loadAppointments() {
