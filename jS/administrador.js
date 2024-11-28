@@ -1,7 +1,3 @@
-document.getElementById('productForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  // Obtener valores del formulario
   const name = document.getElementById('productName').value;
   const description = document.getElementById('productDescription').value;
   const price = parseFloat(document.getElementById('productPrice').value);
@@ -60,7 +56,20 @@ document.getElementById('productForm').addEventListener('submit', function (e) {
   });
 });
 
-// Cargar citas desde localStorage
+  newRow.innerHTML = `
+    <td><img src="${imageUrl}" alt="${name}"></td>
+    <td>${name}</td>
+    <td>${description}</td>
+    <td>$${price.toFixed(2)}</td>
+    <td>${stock}</td>
+    <td>${category}</td>
+  `;
+
+  this.reset();
+  alert('Producto registrado y almacenado correctamente.');
+});
+
+// Funciones para manejar citas
 function loadAppointments() {
   const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
   const tableBody = document.getElementById('appointmentsTable').querySelector('tbody');
@@ -79,7 +88,6 @@ function loadAppointments() {
   });
 }
 
-// Agendar una cita
 function scheduleAppointment() {
   const date = document.getElementById('appointmentDate').value;
   const time = document.getElementById('appointmentTime').value;
@@ -95,7 +103,6 @@ function scheduleAppointment() {
 
   const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
-  // Validar disponibilidad
   const isConflict = appointments.some(
     appointment => appointment.date === date && appointment.time === time
   );
@@ -105,7 +112,6 @@ function scheduleAppointment() {
     return;
   }
 
-  // Agregar nueva cita
   appointments.push({ date, time, service, vehicleBrand, vehicleModel, vehicleYear });
   localStorage.setItem('appointments', JSON.stringify(appointments));
 
@@ -113,7 +119,6 @@ function scheduleAppointment() {
   loadAppointments();
 }
 
-// Cancelar una cita
 function cancelAppointment(index) {
   const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
   appointments.splice(index, 1);
@@ -123,7 +128,8 @@ function cancelAppointment(index) {
   loadAppointments();
 }
 
-// Inicializar citas
+// Inicializar
 document.addEventListener('DOMContentLoaded', () => {
-  loadAppointments();
+  showContent('productos'); // Cambiar la pestaña activa al cargar
+  loadAppointments(); // Cargar citas al inicio
 });
