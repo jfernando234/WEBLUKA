@@ -1,59 +1,62 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-  }
-  
-  .container {
-    display: flex;
-    width: 100%;
-  }
-  
-  .sidebar {
-    background-color: #003366; /* Azul oscuro */
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 10px;
-    box-sizing: border-box;
-  }
-  
-  .tab-button {
-    background-color: #003366;
-    color: white;
-    border: none;
-    padding: 15px;
-    margin-bottom: 10px;
-    text-align: left;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .tab-button.active,
-  .tab-button:hover {
-    background-color: #0055a5; /* Azul más claro */
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    background-color: #f4f4f4; /* Fondo claro */
-  }
-  
-  .content-panel {
-    display: none;
-  }
-  
-  .content-panel:not(.hidden) {
-    display: block;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  /*PRODUCTOS  */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: auto; /* Cambia de 100vh a auto */
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh; /* Asegura que ocupe toda la altura si no hay contenido */
+}
+
+.sidebar {
+  background-color: #003366; /* Azul oscuro */
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  height: auto; /* Ajusta su altura al contenido */
+}
+
+.tab-button {
+  background-color: #003366;
+  color: white;
+  border: none;
+  padding: 15px;
+  margin-bottom: 10px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.tab-button.active,
+.tab-button:hover {
+  background-color: #0055a5; /* Azul más claro */
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4; /* Fondo claro */
+  height: auto; /* Ajusta su altura al contenido */
+}
+
+.content-panel {
+  display: none;
+}
+
+.content-panel:not(.hidden) {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+/* PRODUCTOS */
 form {
   margin-bottom: 20px;
   display: flex;
@@ -88,9 +91,7 @@ img {
   height: auto;
 }
 
-
-
-/*citas*/
+/* CITAS */
 form {
   display: flex;
   flex-direction: column;
@@ -124,8 +125,4 @@ button {
 
 button:hover {
   background-color: #0055a5;
-}
-
-.hidden{
-  display: none;
 }
