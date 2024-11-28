@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Master Store</title>
+
+    <!-- FUENTE GOOGLE FONTS : Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- ICONS: Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+    <!-- ICONS: Line Awesome -->
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+    <!-- Animaciones AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+
+
+    <!-- Mis Estilos -->
+    <link rel="stylesheet" href="/Css/servicio.css">
+
+</head>
+<body>
+
+    <div class="hm-wrapper">
+
+        <!-- =================================
+           HEADER MENU
+        ================================== -->
+        <div class="hm-header">
+
+            <div class="container">
+                <div class="header-menu">
+
+                    <div class="hm-logo">
+                        <a href="/Html/index.html">
+                            <img src="/img/logo-luka.png" alt="">
+                        </a>
+                    </div>
+
+                    <nav class="hm-menu">
+                        <ul>
+                            <li><a href="/Html/produc.html">Productos</a></li>
+                            <li><a href="/Html/servicio.html">Servicio</a></li>
+                            <li><a href="http://">Nosotros</a></li>
+                            <li><a href="http://">Contacto</a></li>
+                        </ul>
+
+
+                        <div class="hm-icon-cart">
+                            <a href="#">
+                                <i class="las la-shopping-cart"></i>
+                                <span>0</span>
+                            </a>
+                        </div>
+
+                        <div class="icon-menu">
+                            <button type="button"><i class="fas fa-bars"></i></button>
+                        </div>
+
+                    </nav>
+
+                    <button class="btn-right" id="btn-login">Iniciar Sesión</button>
+                    <div class="modal" id="modal-login">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <iframe src="login.html" frameborder="0"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Contenido dinámico -->
+    <div class="content">
+        <!-- Agendar Citas -->
+        <div id="citas" class="content-panel">
+          <h2>Agendar Citas</h2>
+          <!-- Formulario -->
+          <form id="appointmentForm">
+            <label for="appointmentDate">Fecha:</label>
+            <input type="date" id="appointmentDate" required>
+  
+            <label for="appointmentTime">Hora:</label>
+            <input type="time" id="appointmentTime" required>
+  
+            <label for="serviceType">Tipo de Servicio:</label>
+            <select id="serviceType" required>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Reparación">Reparación</option>
+            </select>
+  
+            <label for="vehicleBrand">Marca del Vehículo:</label>
+            <input type="text" id="vehicleBrand" placeholder="Ej: Toyota" required>
+  
+            <label for="vehicleModel">Modelo:</label>
+            <input type="text" id="vehicleModel" placeholder="Ej: Corolla" required>
+  
+            <label for="vehicleYear">Año:</label>
+            <input type="number" id="vehicleYear" min="1900" max="2099" placeholder="Ej: 2020" required>
+  
+            <button type="button" onclick="scheduleAppointment()">Agendar Cita</button>
+          </form>
+  
+          <!-- Lista de citas -->
+          <h2>Citas Programadas</h2>
+          <table id="appointmentsTable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Servicio</th>
+                <th>Vehículo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Citas cargadas dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+        <div class="foo-copy">
+            <div class="container">
+                <p>Luka Automotriz 2024 © Todos los derechos reservados</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Animaciones : AOS-->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <!-- Mi Script -->
+    <script src="/jS/servicio.js"></script>
+
+    <script>
+    
+        AOS.init({
+            duration: 1200,
+        })
+
+
+    </script>
+
+</body>
+</html>
