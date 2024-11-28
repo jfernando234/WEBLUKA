@@ -1,26 +1,3 @@
-// Cambios: Función para alternar la visibilidad de los paneles
-function showContent(section) {
-  // Ocultar todos los paneles
-  const panels = document.querySelectorAll('.content-panel');
-  panels.forEach(panel => panel.classList.add('hidden'));
-
-  // Mostrar el panel seleccionado
-  const selectedPanel = document.getElementById(section);
-  selectedPanel.classList.remove('hidden');
-
-  // Quitar clase activa de todos los botones
-  const buttons = document.querySelectorAll('.tab-button');
-  buttons.forEach(button => button.classList.remove('active'));
-
-  // Agregar clase activa al botón seleccionado
-  const activeButton = document.querySelector(`.tab-button[onclick="showContent('${section}')"]`);
-  activeButton.classList.add('active');
-}
-
-// Función para registrar productos
-document.getElementById('productForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
   const name = document.getElementById('productName').value;
   const description = document.getElementById('productDescription').value;
   const price = parseFloat(document.getElementById('productPrice').value);
@@ -28,29 +5,56 @@ document.getElementById('productForm').addEventListener('submit', function (e) {
   const category = document.getElementById('productCategory').value;
   const imageFile = document.getElementById('productImage').files[0];
 
+  // Validar datos
   if (!name || !description || price <= 0 || stock <= 0 || !category || !imageFile) {
-    alert('Por favor, completa todos los campos correctamente.');
-    return;
+      alert('Por favor, completa todos los campos correctamente.');
+      return;
   }
 
-  const imageUrl = URL.createObjectURL(imageFile);
+  // Crear objeto FormData para enviar datos y archivo de imagen
+  const formData = new FormData();
+  formData.append('action', 'addProduct');
+  formData.append('name', name);
+  formData.append('description', description);
+  formData.append('price', price);
+  formData.append('stock', stock);
+  formData.append('category', category);
+  formData.append('image', imageFile);
 
-  const product = {
-    id: Date.now().toString(),
-    name,
-    description,
-    price,
-    stock,
-    category,
-    image: imageUrl,
-  };
+  // Enviar datos al servidor con fetch
+  fetch('products.php', {
+      method: 'POST',
+      body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status === 'success') {
+          alert(data.message);
 
-  const products = JSON.parse(localStorage.getItem('products')) || [];
-  products.push(product);
-  localStorage.setItem('products', JSON.stringify(products));
+          // Crear una nueva fila en la tabla
+          const table = document.getElementById('productTable').querySelector('tbody');
+          const newRow = table.insertRow();
 
-  const table = document.getElementById('productTable').querySelector('tbody');
-  const newRow = table.insertRow();
+          newRow.innerHTML = `
+              <td><img src="${data.imageUrl}" alt="${name}" style="width: 100px;"></td>
+              <td>${name}</td>
+              <td>${description}</td>
+              <td>$${price.toFixed(2)}</td>
+              <td>${stock}</td>
+              <td>${category}</td>
+          `;
+
+          // Resetear formulario
+          this.reset();
+      } else {
+          alert(data.message);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('Error al guardar el producto.');
+  });
+});
 
   newRow.innerHTML = `
     <td><img src="${imageUrl}" alt="${name}"></td>
