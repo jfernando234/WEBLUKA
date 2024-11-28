@@ -1,86 +1,71 @@
+// Cambios: Función para alternar la visibilidad de los paneles
 function showContent(section) {
-    // Ocultar todos los paneles
-    const panels = document.querySelectorAll('.content-panel');
-    panels.forEach(panel => panel.classList.add('hidden'));
-  
-    // Mostrar el panel seleccionado
-    const selectedPanel = document.getElementById(section);
-    selectedPanel.classList.remove('hidden');
-  
-    // Quitar clase activa de todos los botones
-    const buttons = document.querySelectorAll('.tab-button');
-    buttons.forEach(button => button.classList.remove('active'));
-  
-    // Agregar clase activa al botón seleccionado
-    const activeButton = document.querySelector(`.tab-button[onclick="showContent('${section}')"]`);
-    activeButton.classList.add('active');
-  }
-  
-  function showContent(section) {
-    const panels = document.querySelectorAll('.content-panel');
-    panels.forEach(panel => panel.classList.add('hidden'));
-  
-    const selectedPanel = document.getElementById(section);
-    selectedPanel.classList.remove('hidden');
-  
-    const buttons = document.querySelectorAll('.tab-button');
-    buttons.forEach(button => button.classList.remove('active'));
-  
-    const activeButton = document.querySelector(`.tab-button[onclick="showContent('${section}')"]`);
-    activeButton.classList.add('active');
+  // Ocultar todos los paneles
+  const panels = document.querySelectorAll('.content-panel');
+  panels.forEach(panel => panel.classList.add('hidden'));
+
+  // Mostrar el panel seleccionado
+  const selectedPanel = document.getElementById(section);
+  selectedPanel.classList.remove('hidden');
+
+  // Quitar clase activa de todos los botones
+  const buttons = document.querySelectorAll('.tab-button');
+  buttons.forEach(button => button.classList.remove('active'));
+
+  // Agregar clase activa al botón seleccionado
+  const activeButton = document.querySelector(`.tab-button[onclick="showContent('${section}')"]`);
+  activeButton.classList.add('active');
+}
+
+// Función para registrar productos
+document.getElementById('productForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById('productName').value;
+  const description = document.getElementById('productDescription').value;
+  const price = parseFloat(document.getElementById('productPrice').value);
+  const stock = parseInt(document.getElementById('productStock').value);
+  const category = document.getElementById('productCategory').value;
+  const imageFile = document.getElementById('productImage').files[0];
+
+  if (!name || !description || price <= 0 || stock <= 0 || !category || !imageFile) {
+    alert('Por favor, completa todos los campos correctamente.');
+    return;
   }
 
-  document.getElementById('productForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-  
-    const name = document.getElementById('productName').value;
-    const description = document.getElementById('productDescription').value;
-    const price = parseFloat(document.getElementById('productPrice').value);
-    const stock = parseInt(document.getElementById('productStock').value);
-    const category = document.getElementById('productCategory').value;
-    const imageFile = document.getElementById('productImage').files[0];
-  
-    if (!name || !description || price <= 0 || stock <= 0 || !category || !imageFile) {
-      alert('Por favor, completa todos los campos correctamente.');
-      return;
-    }
-  
-    const imageUrl = URL.createObjectURL(imageFile);
-  
-    // Crear un objeto producto
-    const product = {
-      id: Date.now().toString(),
-      name,
-      description,
-      price,
-      stock,
-      category,
-      image: imageUrl,
-    };
-  
-    // Guardar en localStorage
-    const products = JSON.parse(localStorage.getItem('products')) || [];
-    products.push(product);
-    localStorage.setItem('products', JSON.stringify(products));
-  
-    // Crear una nueva fila en la tabla
-    const table = document.getElementById('productTable').querySelector('tbody');
-    const newRow = table.insertRow();
-  
-    newRow.innerHTML = `
-      <td><img src="${imageUrl}" alt="${name}"></td>
-      <td>${name}</td>
-      <td>${description}</td>
-      <td>$${price.toFixed(2)}</td>
-      <td>${stock}</td>
-      <td>${category}</td>
-    `;
-  
-    this.reset();
-    alert('Producto registrado y almacenado correctamente.');
-  });
+  const imageUrl = URL.createObjectURL(imageFile);
 
-// Cargar citas desde localStorage
+  const product = {
+    id: Date.now().toString(),
+    name,
+    description,
+    price,
+    stock,
+    category,
+    image: imageUrl,
+  };
+
+  const products = JSON.parse(localStorage.getItem('products')) || [];
+  products.push(product);
+  localStorage.setItem('products', JSON.stringify(products));
+
+  const table = document.getElementById('productTable').querySelector('tbody');
+  const newRow = table.insertRow();
+
+  newRow.innerHTML = `
+    <td><img src="${imageUrl}" alt="${name}"></td>
+    <td>${name}</td>
+    <td>${description}</td>
+    <td>$${price.toFixed(2)}</td>
+    <td>${stock}</td>
+    <td>${category}</td>
+  `;
+
+  this.reset();
+  alert('Producto registrado y almacenado correctamente.');
+});
+
+// Funciones para manejar citas
 function loadAppointments() {
   const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
   const tableBody = document.getElementById('appointmentsTable').querySelector('tbody');
@@ -99,7 +84,6 @@ function loadAppointments() {
   });
 }
 
-// Agendar una cita
 function scheduleAppointment() {
   const date = document.getElementById('appointmentDate').value;
   const time = document.getElementById('appointmentTime').value;
@@ -115,7 +99,6 @@ function scheduleAppointment() {
 
   const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
-  // Validar disponibilidad
   const isConflict = appointments.some(
     appointment => appointment.date === date && appointment.time === time
   );
@@ -125,7 +108,6 @@ function scheduleAppointment() {
     return;
   }
 
-  // Agregar nueva cita
   appointments.push({ date, time, service, vehicleBrand, vehicleModel, vehicleYear });
   localStorage.setItem('appointments', JSON.stringify(appointments));
 
@@ -133,7 +115,6 @@ function scheduleAppointment() {
   loadAppointments();
 }
 
-// Cancelar una cita
 function cancelAppointment(index) {
   const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
   appointments.splice(index, 1);
@@ -143,7 +124,8 @@ function cancelAppointment(index) {
   loadAppointments();
 }
 
-// Inicializar citas
+// Inicializar
 document.addEventListener('DOMContentLoaded', () => {
-  loadAppointments();
+  showContent('productos'); // Cambiar la pestaña activa al cargar
+  loadAppointments(); // Cargar citas al inicio
 });

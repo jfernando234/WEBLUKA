@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Lateral</title>
   <link rel="stylesheet" href="/Css/Administrador.css">
+  <style>
+    /* Clase para ocultar los paneles */
+    .hidden {
+      display: none;
+    }
+
+    /* Clase para el botón activo */
+    .tab-button.active {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -13,7 +25,7 @@
       <button class="tab-button active" onclick="showContent('productos')">Productos</button>
       <button class="tab-button" onclick="showContent('citas')">Citas</button>
     </div>
-     <!-- Contenido dinámico -->
+    <!-- Contenido dinámico -->
     <div class="content">
       <!-- Sección de Productos -->
       <div id="productos" class="content-panel">
@@ -62,12 +74,10 @@
           </tbody>
         </table>
       </div>
-    <!-- Contenido dinámico -->
-    <div class="content">
-      <!-- Agendar Citas -->
-      <div id="citas" class="content-panel">
+      
+      <!-- Sección de Citas -->
+      <div id="citas" class="content-panel hidden">
         <h2>Agendar Citas</h2>
-        <!-- Formulario -->
         <form id="appointmentForm">
           <label for="appointmentDate">Fecha:</label>
           <input type="date" id="appointmentDate" required>
@@ -93,7 +103,6 @@
           <button type="button" onclick="scheduleAppointment()">Agendar Cita</button>
         </form>
 
-        <!-- Lista de citas -->
         <h2>Citas Programadas</h2>
         <table id="appointmentsTable">
           <thead>
@@ -110,11 +119,6 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-    <div class="content">
-      <div id="productos" class="content-panel">Aquí se muestran los productos.</div>
-      <div id="citas" class="content-panel hidden">Aquí se muestran las citas.</div>
     </div>
   </div>
   <script src="/jS/administrador.js"></script>
